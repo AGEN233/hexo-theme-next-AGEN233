@@ -1,0 +1,39 @@
+<div class="footer-title">
+  枫林·浅羽·云梦 已勉强维持 <span id="timeFullData"></span>
+</div>
+<div class="powered-by">
+  © <span id="timeYearData"></span> <span class="rgb-text">御枫林下</span> Powered by <a href="https://hexo.io/zh-cn/">Hexo</a> & <a href="https://github.com/next-theme/hexo-theme-next">Next.Gemini</a>
+</div>
+<script>
+  var time = new Date();
+  var grt = new Date("10/01/2022 00:00:00");
+  var years = time.getFullYear();
+  function getTimeData() {
+    time.setTime(time.getTime() + 250);
+    
+    var ynum = Math.floor(years);
+    var days = (time - grt) / 1000 / 60 / 60 / 24;
+    var dnum = Math.floor(days);
+
+    var hours = (time - grt) / 1000 / 60 / 60 - (24 * dnum);
+    var hnum = Math.floor(hours);
+    if (String(hnum).length == 1) { hnum = "0" + hnum; }
+
+    var minutes = (time - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+    var mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) { mnum = "0" + mnum; }
+
+    var seconds = (time - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+    var snum = Math.round(seconds);
+    if (String(snum).length == 1) { snum = "0" + snum; }
+
+    document.getElementById("timeFullData").innerHTML = `${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒`;
+  }; 
+
+  window.onload = function () {
+    getTimeData();
+    document.getElementById("timeYearData").innerHTML = `${years}`;
+    setInterval(getTimeData, 250);
+  };
+</script>
+{{- next_inject('footer') }}
